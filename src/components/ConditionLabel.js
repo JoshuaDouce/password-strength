@@ -1,7 +1,7 @@
 import { Checkbox, FormControlLabel } from '@mui/material';
 import { RadioButtonUnchecked, RadioButtonChecked } from '@mui/icons-material';
 
-const ConditionLabel = (props) => {
+const ConditionLabel = ({ isValid, labelText }) => {
   return (
     <FormControlLabel
       control={
@@ -9,14 +9,14 @@ const ConditionLabel = (props) => {
           color="success"
           icon={<RadioButtonUnchecked />}
           checkedIcon={<RadioButtonChecked />}
-          disabled={!props.isValid}
-          checked={props.isValid}
+          disabled={!isValid}
+          checked={isValid}
           onClick={(event) => {
             event.preventDefault();
           }}
         />
       }
-      label={props.labelText}
+      label={labelText}
     />
   );
 };

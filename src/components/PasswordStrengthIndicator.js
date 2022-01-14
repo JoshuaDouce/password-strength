@@ -8,7 +8,7 @@ import {
 } from '../utils/PasswordUtils';
 import ConditionLabel from './ConditionLabel';
 
-const PasswordStrengthIndicator = (props) => {
+const PasswordStrengthIndicator = ({ password }) => {
   const strengthConditions = [
     [hasUpperCase, 'Upper case character'],
     [hasLowerCase, 'Lower case character'],
@@ -26,7 +26,7 @@ const PasswordStrengthIndicator = (props) => {
             <ConditionLabel
               key={condition[1]}
               labelText={condition[1]}
-              isValid={condition[0](props.password)}></ConditionLabel>
+              isValid={condition[0](password)}></ConditionLabel>
           ))}
         </>
       </FormControl>

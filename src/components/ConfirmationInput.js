@@ -1,28 +1,36 @@
 import { Box, TextField } from '@mui/material';
 
-const ConfirmationInput = (props) => {
-  const inputsMatch = props.primaryValue === props.confirmationValue;
+const ConfirmationInput = ({
+  primaryValue,
+  confirmationValue,
+  inputName,
+  primaryValueInError,
+  primaryOnChange,
+  confirmPassword,
+  confirmationChange
+}) => {
+  const inputsMatch = primaryValue === confirmationValue;
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column' }}>
       <TextField
-        value={props.primaryValue}
+        value={primaryValue}
         sx={{ marginBottom: '1em' }}
-        label={props.inputName}
+        label={inputName}
         color="primary"
-        error={props.primaryValueInError}
-        onChange={props.primaryOnChange}
+        error={primaryValueInError}
+        onChange={primaryOnChange}
         type="password"
-        id={props.inputName}
+        id={inputName}
       />
       <TextField
-        value={props.confirmPassword}
-        label={`Confirm ${props.inputName}`}
+        value={confirmPassword}
+        label={`Confirm ${inputName}`}
         color="primary"
-        error={!inputsMatch && !props.primaryValueInError}
-        onChange={props.confirmationChange}
+        error={!inputsMatch && !primaryValueInError}
+        onChange={confirmationChange}
         type="password"
-        id={`Confirm ${props.inputName}`}
+        id={`Confirm ${inputName}`}
       />
     </Box>
   );
