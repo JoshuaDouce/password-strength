@@ -8,6 +8,12 @@ import {
 } from '../utils/PasswordUtils';
 import ConditionLabel from './ConditionLabel';
 
+/**
+ * TODO: This can be made more generic to just be a conditions list and take a list of conditions
+ * TODO: strengthConditions can be refactored into an object then use the destructed object rather
+ * than the indexers in the map function
+ */
+
 const PasswordStrengthIndicator = ({ password }) => {
   const strengthConditions = [
     [hasUpperCase, 'Upper case character'],

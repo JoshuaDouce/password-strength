@@ -15,8 +15,13 @@ import PasswordStrengthIndicator from './PasswordStrengthIndicator';
 const CreatePassword = () => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const passwordsDoNotMatch = !(password === confirmPassword);
+  const passwordsDoNotMatch = password !== confirmPassword;
   const passwordInvalid = !isValid(password) && password !== '';
+
+  /**
+   * TODO: Currently this re-renders the entire card. Encapsulate the inputs and indicatiors
+   * TODO: Add a delay to error messages showing until the user has stopped typing
+   */
 
   return (
     <Box sx={{ minWidth: 300 }}>

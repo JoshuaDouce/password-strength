@@ -1,3 +1,7 @@
+/**
+ * TODO: Add tests
+ */
+
 const hasLowerCase = (password) => {
   const regexLowerCase = new RegExp('(?=.*[a-z])');
 
