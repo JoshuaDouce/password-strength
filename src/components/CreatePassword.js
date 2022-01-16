@@ -10,7 +10,8 @@ import {
 } from '@mui/material';
 import { isValid } from '../utils/PasswordUtils';
 import ConfirmationInput from './ConfirmationInput';
-import PasswordStrengthIndicator from './PasswordStrengthIndicator';
+import ConditionsList from './ConditionsList';
+import { strengthConditions } from '../utils/PasswordStrengthConditions';
 
 const CreatePassword = () => {
   const [password, setPassword] = useState('');
@@ -64,7 +65,11 @@ const CreatePassword = () => {
               )
             )}
           </FormControl>
-          <PasswordStrengthIndicator password={password} />
+          <ConditionsList
+            inputForConditions={password}
+            conditions={strengthConditions}
+            legend="Password Strength"
+          />
         </CardContent>
       </Card>
     </Box>
