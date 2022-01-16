@@ -2,15 +2,13 @@ import { Box, TextField } from '@mui/material';
 
 const ConfirmationInput = ({
   primaryValue,
-  confirmationValue,
+  inputsMatch,
   inputName,
   primaryValueInError,
   primaryOnChange,
   confirmPassword,
   confirmationChange
 }) => {
-  const inputsMatch = primaryValue === confirmationValue;
-
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column' }}>
       <TextField

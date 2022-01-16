@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FormHelperText, FormControl } from '@mui/material';
 import { isValid } from '../utils/PasswordUtils';
 import ConfirmationInput from './ConfirmationInput';
@@ -8,8 +8,16 @@ import { strengthConditions } from '../utils/PasswordStrengthConditions';
 function PasswordConfirmation() {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const passwordsDoNotMatch = password !== confirmPassword;
-  const passwordInvalid = !isValid(password) && password !== '';
+  const [passwordsMatch, setPasswordsMatch] = useState(password === confirmPassword);
+  const [passwordInvalid, setPasswordInvalid] = useState(!isValid(password) && password !== '');
+
+  useEffect(() => {
+    const evaluateInputTimeout = setTimeout(() => {
+      setPasswordInvalid(!isValid(password) && password !== '');
+      setPasswordsMatch(password === confirmPassword);
+    }, 500);
+    return () => clearTimeout(evaluateInputTimeout);
+  }, [password, confirmPassword]);
 
   return (
     <>
@@ -17,9 +25,10 @@ function PasswordConfirmation() {
         sx={{ ml: 3, display: 'flex' }}
         component="fieldset"
         variant="standard"
-        error={passwordsDoNotMatch || passwordInvalid}>
+        error={passwordsMatch || passwordInvalid}>
         <ConfirmationInput
           inputName="Password"
+          inputsMatch={passwordsMatch}
           primaryValue={password}
           primaryValueInError={passwordInvalid}
           confirmationValue={confirmPassword}
@@ -33,7 +42,7 @@ function PasswordConfirmation() {
         {passwordInvalid ? (
           <FormHelperText sx={{ fontWeight: 'bold' }}>Passwords is invalid</FormHelperText>
         ) : (
-          passwordsDoNotMatch && (
+          !passwordsMatch && (
             <FormHelperText sx={{ fontWeight: 'bold' }}>Passwords do not match</FormHelperText>
           )
         )}
