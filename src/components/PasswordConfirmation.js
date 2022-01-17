@@ -1,28 +1,24 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { FormHelperText, FormControl } from '@mui/material';
-import { isValid } from '../utils/PasswordUtils';
 import ConfirmationInput from './ConfirmationInput';
 import ConditionsList from './ConditionsList';
 import { strengthConditions } from '../utils/PasswordStrengthConditions';
+import usePasswordConfirmation from '../hooks/usePasswordConfirmation';
 
 function PasswordConfirmation() {
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [passwordsMatch, setPasswordsMatch] = useState(password === confirmPassword);
-  const [passwordInvalid, setPasswordInvalid] = useState(!isValid(password) && password !== '');
-
-  useEffect(() => {
-    const evaluateInputTimeout = setTimeout(() => {
-      setPasswordInvalid(!isValid(password) && password !== '');
-      setPasswordsMatch(password === confirmPassword);
-    }, 500);
-    return () => clearTimeout(evaluateInputTimeout);
-  }, [password, confirmPassword]);
+  const {
+    password,
+    setPassword,
+    confirmPassword,
+    setConfirmPassword,
+    passwordInvalid,
+    passwordsMatch
+  } = usePasswordConfirmation();
 
   return (
     <>
       <FormControl
-        sx={{ ml: 3, display: 'flex' }}
+        sx={{ display: 'flex' }}
         component="fieldset"
         variant="standard"
         error={passwordsMatch || passwordInvalid}>
@@ -40,10 +36,14 @@ function PasswordConfirmation() {
           }}
         />
         {passwordInvalid ? (
-          <FormHelperText sx={{ fontWeight: 'bold' }}>Passwords is invalid</FormHelperText>
+          <FormHelperText sx={{ fontWeight: 'bold' }} error={passwordInvalid}>
+            Passwords is invalid
+          </FormHelperText>
         ) : (
           !passwordsMatch && (
-            <FormHelperText sx={{ fontWeight: 'bold' }}>Passwords do not match</FormHelperText>
+            <FormHelperText sx={{ fontWeight: 'bold' }} error={!passwordsMatch}>
+              Passwords do not match
+            </FormHelperText>
           )
         )}
       </FormControl>
